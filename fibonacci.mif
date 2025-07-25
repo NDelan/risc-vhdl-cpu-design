@@ -1,0 +1,26 @@
+-- Fibonacci Program
+-- This program calculates Fibonacci numbers using the CPU architecture.
+
+DEPTH = 256;            -- Depth of the memory
+WIDTH = 16;             -- Width of the memory
+ADDRESS_RADIX = HEX;    -- Address representation in hexadecimal
+DATA_RADIX = BIN;       -- Data representation in binary
+
+CONTENT
+BEGIN
+00 : 1111100000000000; -- Initialize RA with 0
+01 : 1111100000001001; -- Initialize RB with 1
+02 : 1111111111111100; -- Initialize RE with -1
+03 : 1111100011000011; -- Initialize RD with 10
+04 : 0011010000000101; -- Push PC, CR on the stack, and jump to line 0x05
+05 : 1000000001000010; -- RC = RA + RB
+06 : 0110000000000000; -- Store the value of RA to output port
+07 : 1000001110000000; -- RA = RB + 0
+08 : 1000010110000001; -- RB = RC + 0
+09 : 1000011100000011; -- RD = RD + RE
+0a : 0011000000001100; -- Jump to line 0x0c if ALU result is zero
+0b : 0011010000000101; -- Push PC, CR on the stack, and jump to line 0x05
+0c : 0011100000000000; -- Pop the CR and PC to continue execution
+0d : 0011110000000000; -- Enter into the halt state of the CPU
+[0d..FF] : 1111111111111111; -- Fill the remaining memory locations with halt instructions
+END
